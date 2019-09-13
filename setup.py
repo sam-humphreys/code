@@ -9,5 +9,5 @@ setup(
             'coderun = code.main:main',
         ],
     },
-    include_package_date=True,
+    include_package_data=True,
 )
