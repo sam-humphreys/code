@@ -1,0 +1,5 @@
+# Automated Docker testing upon build
+# Docs - https://docs.docker.com/docker-hub/builds/automated-testing/
+sut:
+  build: .
+  command: pytest --hypothesis-profile=intensive
