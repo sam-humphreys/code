@@ -3,10 +3,16 @@ import logging
 import click
 import IPython
 
+import code.k8s
+
 
 @click.group()
 def main():
     LOG = logging.getLogger(__name__)
+
+
+# Register subcommands
+main.add_command(code.k8s.k8s)
 
 
 @main.command()
