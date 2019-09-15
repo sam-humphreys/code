@@ -34,4 +34,4 @@ event_strategy = st.fixed_dictionaries({
     'type': event_strategy_type,
 })
 
-multiple_event_strategy = st.lists(event_strategy, min_size=0, max_size=10)
+multiple_event_strategy = st.lists(event_strategy, min_size=3, max_size=10, unique_by=(lambda x: x['object'].metadata.name))

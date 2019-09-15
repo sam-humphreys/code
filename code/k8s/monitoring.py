@@ -29,14 +29,22 @@ class KubernetesClient:
             processed = _process_pod_event(alerted, event)
 
             if processed:
-                name, status = processed
+                name, status, colour = processed
+
+                # Send Slack alert
+                code.alerts.slack.post_event(code.alerts.slack.Event(
+                    status=name,
+                    colour=colour,
+                    message=f"Status - {status}",
+                ))
+
                 alerted[name] = status
 
 
 def _process_pod_event(
     alerted: typing.Dict[str, str],
     event: typing.Dict[str, typing.Any],
-) -> typing.Optional[typing.Tuple[str, str]]:
+) -> typing.Optional[typing.Tuple[str, str, code.alerts.slack.Colours]]:
     """
     Process a Kubernetes pod event. If the pod name
     is in the alerted dict & status is the same do
@@ -54,13 +62,8 @@ def _process_pod_event(
         LOG.info(f'Event has already been alerted on - ({name}, {alerted_status})')
         return None
 
-    _alert_pod_event(name, status, event['type'])
+    event_type = event['type'].upper()
 
-    return (name, status)
-
-
-def _alert_pod_event(name: str, status: str, event_type: str) -> None:
-    """Send Slack alert based upon pod event details"""
     if event_type == 'ADDED' and status == 'PENDING':
         colour = code.alerts.slack.Colours.WARNING
     elif event_type in ['ADDED', 'MODIFIED'] and status != 'DELETED':
@@ -68,8 +71,4 @@ def _alert_pod_event(name: str, status: str, event_type: str) -> None:
     else:
         colour = code.alerts.slack.Colours.ERROR
 
-    code.alerts.slack.post_event(code.alerts.slack.Event(
-        status=name,
-        colour=colour,
-        message=f"Status - {status}",
-    ))
+    return (name, status, colour)

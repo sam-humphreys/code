@@ -11,7 +11,7 @@ import code.alerts.tests.hypothesis_strategies
 @hypothesis.given(event=code.alerts.tests.hypothesis_strategies.slack_event)
 def test_build_event(event: code.alerts.slack.Event):
     """Test the building of a slack message is accurate given the inputs"""
-    build = code.alerts.slack.build_event(event)
+    build = event.build()
     build = build['attachments'].pop()  # Only one item in this list
     fields = build['fields'].pop()
 
@@ -31,5 +31,5 @@ def test_post_slack_event(event: code.alerts.slack.Event, mock_post):
 
     mock_post.assert_called_with(
         code.alerts.slack.ALERTS_CHANNEL,
-        data=json.dumps(code.alerts.slack.build_event(event))
+        data=json.dumps(event.build()),
     )
