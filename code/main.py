@@ -1,14 +1,16 @@
 import logging
+import logging.config
 
 import click
 import IPython
 
 import code.k8s
+import code.logging
 
 
 @click.group()
 def main():
-    LOG = logging.getLogger(__name__)
+    logging.config.dictConfig(code.logging.CONFIG)
 
 
 # Register subcommands
@@ -22,9 +24,10 @@ def ipython():
 
 
 @main.command()
-def test():
+def test_cli():
+    """Test whether of not the CLI is working"""
     LOG = logging.getLogger(__name__)
-    LOG.info('SUCCESS')
+    LOG.info('CLI Working')
 
 
 if __name__ == '__main__':

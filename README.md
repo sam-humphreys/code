@@ -35,7 +35,9 @@ Please ensure you completed all the prerequisites before continuing
 
 This project space uses [Click](https://click.palletsprojects.com/en/7.x/) to execute commands.
 
-To run commands simply type `coderun` into the command line, followed by the `coderun [OPTIONS] COMMAND [ARGS]..` syntax. Typing `coderun` by itself will list all the available commands. To run an IPython interactive shell for example, enter - `coderun ipython`
+To run commands simply type `coderun` into the command line, followed by the `coderun [OPTIONS] COMMAND [ARGS]..` syntax. Typing `coderun` by itself will list all the available commands. To run an IPython interactive shell for example, enter - `coderun ipython`. Example usage can be seen in the image below.
+
+![CLI Example](./images/cli_example.png "Example CLI usage")
 
 To register a new command:
 1. Write your functions by either creating a new `@click.group()` or adding to an existing group `@group.command()`
@@ -50,13 +52,15 @@ To register a new command:
 
 ## Continuous Integration (CI)
 
-This repository uses [Docker Hub](https://hub.docker.com/) to handle CI. This works fine due to the low volume of code being pushed and it is also open-source (perfect for this purpose). Docker Hub has a Slack integration, so alerts on build/test status' can be tracked fairly easily. These alerts have direct links to the UI where full logs can be found for debugging or other requirements.
+This repository uses [Docker Hub](https://hub.docker.com/) to handle CI. This works fine due to the low volume of code being pushed and it is also open-source (perfect for this purpose). Docker Hub has a Slack integration, so alerts on build/test status' can be tracked fairly easily. These alerts have direct links to the UI where full logs can be found for debugging or other requirements. The other pro of using Docker Hub, is that having configured automated tests, build status' are posted automatically to each open Github pull request upon completion as can be seen in the image below.
+
+![PR Example](./images/pr_example.png "Example Gtihub pull request CI")
 
 The way Docker Hub is configured, it will:
 - Execute an intensive pytest run for each open pull request
 - Each time a pull request is merged into master branch:
     - Automatically build the image
-    - Due to the [docker compose test file](./docker-compose.test.yml), it will execute an intensive pytest run at the end of the build
+    - Due to the [Docker compose test file](./docker-compose.test.yml), it will execute an intensive pytest run at the end of the build
     - Due to the Docker post push [file](./hooks/post_push), create a tag within the Docker Hub repository using the merged Git hash. This enables exact commit referencing, which can be seen in the image in this deployment [here](./gitops/k8s/deployments/watch-pods.yaml).
 
 If the tests fail, the build will too fail, thus enabling smooth CI. This repository uses [Pytest](https://docs.pytest.org/en/latest/) and [Hypothesis](https://hypothesis.readthedocs.io/en/latest/) to run a series of informed and property based tests.
