@@ -50,14 +50,20 @@ To register a new command:
 
 ## Continuous Integration (CI)
 
-This repository uses [Pytest](https://docs.pytest.org/en/latest/) and [Hypothesis](https://hypothesis.readthedocs.io/en/latest/) to run a series of informed and property based tests.
+This repository uses [Docker Hub](https://hub.docker.com/) to handle CI. This works fine due to the low volume of code being pushed and it is also open-source (perfect for this purpose). Docker Hub has a Slack integration, so alerts on build/test status' can be tracked fairly easily. These alerts have direct links to the UI where full logs can be found for debugging or other requirements.
 
-The way docker is configured for this repository, dockerhub will execute an intensive pytest run for each build due to the configured [docker compose test file](./docker-compose.test.yml) and automated builds. If any tests fail, the build will too fail, thus enabling smooth CI.
+The way Docker Hub is configured, it will:
+- Execute an intensive pytest run for each open pull request
+- Each time a pull request is merged into master branch:
+    - Automatically build the image
+    - Due to the [docker compose test file](./docker-compose.test.yml), it will execute an intensive pytest run at the end of the build
+    - Due to the Docker post push [file](./hooks/post_push), create a tag within the Docker Hub repository using the merged Git hash. This enables exact commit referencing, which can be seen in the image in this deployment [here](./gitops/k8s/deployments/watch-pods.yaml).
 
-To execute tests:
+If the tests fail, the build will too fail, thus enabling smooth CI. This repository uses [Pytest](https://docs.pytest.org/en/latest/) and [Hypothesis](https://hypothesis.readthedocs.io/en/latest/) to run a series of informed and property based tests.
+
+To execute tests from the command line:
 - All tests normally: `pytest`
 - Change different hypothesis profiles:
     - Fast (less examples, shorter time limits): `pytest --hypothesis-profile=fast`
     - Intensive (more examples, longer time limits): `pytest --hypothesis-profile=intensive`
-
 ---

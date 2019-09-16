@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
       - name: watch-pods-container
-        image: samhumphreys/code:latest
+        image: samhumphreys/code:00f5804359fd112af755d590a0db557464171450
         imagePullPolicy: Always
         command: ["coderun"]
         args: ["k8s", "watch-pods"]
