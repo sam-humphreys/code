@@ -4,7 +4,7 @@ WORKDIR /code
 
 COPY . /code
 
-# Enables executable CLI using 'coderun CMD ARGS'
+# Enables native CLI
 ENV PYTHONPATH :/code
 
 RUN python setup.py install

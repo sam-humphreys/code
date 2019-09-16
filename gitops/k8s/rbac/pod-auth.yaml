@@ -1,0 +1,26 @@
+# Enable pod-to-pod get, list & watch in the default namespace
+# Current usage:
+#   - Monitoring K8s pod events in cluster
+apiVersion: rbac.authorization.k8s.io/v1
+kind: Role
+metadata:
+  namespace: default
+  name: pod-auth
+rules:
+- apiGroups: [""]
+  resources: ["pods"]
+  verbs: ["get", "watch", "list"]
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: pod-auth
+  namespace: default
+subjects:
+- kind: ServiceAccount
+  name: default
+  namespace: default
+roleRef:
+  kind: Role
+  name: pod-auth
+  apiGroup: rbac.authorization.k8s.io

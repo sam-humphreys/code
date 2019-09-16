@@ -1,0 +1,27 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: watch-pods
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: watch-pods
+  template:
+    metadata:
+      labels:
+        app: watch-pods
+    spec:
+      containers:
+      - name: watch-pods-container
+        image: samhumphreys/code:latest
+        imagePullPolicy: Always
+        command: ["coderun"]
+        args: ["k8s", "watch-pods"]
+        resources:
+          requests:
+            cpu: 100m
+            memory: 1Gi
+          limits:
+            cpu: 100m
+            memory: 1Gi
