@@ -1,0 +1,6 @@
+#!/bin/bash
+echo "=> Building the binary"
+docker build --tag=$SOURCE_BRANCH:$SOURCE_COMMIT .
+
+docker tag $IMAGE_NAME $DOCKER_REPO:$SOURCE_COMMIT
+docker push $DOCKER_REPO:$SOURCE_COMMIT
