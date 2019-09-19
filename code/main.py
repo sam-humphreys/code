@@ -6,6 +6,7 @@ import IPython
 
 import code.k8s
 import code.logging
+import code.ui
 
 
 @click.group()
@@ -15,6 +16,7 @@ def main():
 
 # Register subcommands
 main.add_command(code.k8s.k8s)
+main.add_command(code.ui.flask_app)
 
 
 @main.command()
