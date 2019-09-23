@@ -19,7 +19,7 @@ def prev_date(lookback: int) -> pandas.Timestamp:
     return (pandas.Timestamp('now') - datetime.timedelta(lookback)).normalize()
 
 
-def generate_positions() -> pandas.DataFrame:
+def positions() -> pandas.DataFrame:
     """Return a fixture dataframe holding position quantities"""
     data = [
         [PORTFOLIO_TICKERS[0], prev_date(23), 'L', 37],
@@ -49,7 +49,7 @@ def extract_price_yahoo(ticker: str) -> pandas.DataFrame:
     return df
 
 
-def generate_portfolio() -> pandas.DataFrame:
+def portfolio() -> pandas.DataFrame:
     """Generate a dataframe containing key portfolio data (dummy data)"""
     def _load_prices(df):
         for ticker in df['ticker'].unique():
@@ -82,7 +82,7 @@ def generate_portfolio() -> pandas.DataFrame:
 
         return row['cash_diff']
 
-    df = generate_positions()
+    df = positions()
     prices = pandas.concat(_load_prices(df))
 
     df['current_date'] = pandas.pandas.Timestamp('now').normalize()
