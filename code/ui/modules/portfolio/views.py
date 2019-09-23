@@ -29,8 +29,8 @@ def portfolio_live():
     )
 
 
-@app.route('/portfolio/historical_prices', methods=['GET'])
-def portfolio_historical_prices():
+@app.route('/portfolio/prices', methods=['GET'])
+def portfolio_prices():
     """Display historical close price time series for a specific ticker"""
     ticker = flask.request.args.get('ticker', default=None, type=str)
     if not ticker:
@@ -44,7 +44,7 @@ def portfolio_historical_prices():
     df_dict = df[['date', 'close']].to_dict('records')
 
     return flask.render_template(
-        template_name_or_list='portfolio/historical_price.html',
+        template_name_or_list='portfolio/prices.html',
         table_data=df_html,
         chart_data=df_dict,
         selected_ticker=ticker,

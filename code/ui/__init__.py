@@ -25,7 +25,7 @@ def run():
 @app.route('/')
 def index():
     """Landing page route"""
-    return flask.render_template('home.html')
+    return flask.render_template('default/home.html')
 
 
 @app.route('/about', methods=['POST', 'GET'])

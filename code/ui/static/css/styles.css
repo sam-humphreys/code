@@ -1,3 +1,57 @@
+html, body {
+    height: 100%;
+    margin: 0;
+}
+
+.custom-wrapper {
+    min-height: 100%;
+    margin-bottom: -25px;
+}
+
+.custom-footer, .custom-push {
+    height: 25px;
+}
+
+.custom-footer {
+    text-align: right;
+}
+
+.footer-container {
+    padding-right: 15px;
+    padding-bottom: 15px;
+}
+
+.custom-footer, .custom-footer>.footer-container>* {
+    color: #cccccc;
+}
+
+.custom-footer>.footer-container>* {
+    padding-left: 5px;
+}
+
+.custom-footer>.footer-container>*:hover {
+    color: #343a40 !important;
+}
+
+.navbar-toggler {
+    cursor: pointer;
+    margin-bottom: 5px;
+}
+
+.navbar>button:active {
+    border-color: #aacaea !important;
+}
+
+.navbar>button:focus {
+    outline: none !important;
+}
+
+@media (max-width: 991px) {
+    .navbar>.collapse>.navbar-nav>li {
+        border-top: 1px solid #aacaea;
+    }
+}
+
 .my-custom-scrollbar {
     position: relative;
     height: 1000px;
@@ -6,4 +60,9 @@
 
 .table-wrapper-scroll-y {
     display: block;
+}
+
+.custom-jumbotron {
+    border-radius: 0px 0px 10px 10px !important;
+    background-color: #aacaea !important;
 }

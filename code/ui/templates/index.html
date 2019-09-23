@@ -1,35 +1,49 @@
 <!doctype html>
 <html lang="en">
   <head>
-    <!-- Required meta tags -->
+    <!-- Meta Tags -->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta HTTP-EQUIV="expires" content="1">
+    <meta HTTP-EQUIV="Pragma" content="no-cache">
+    <meta name="robots" content="nofollow">
+    <meta name="owner" content="Sam Humphreys">
+    <meta name="author" content="Sam Humphreys">
 
-    <!-- Bootstrap CSS -->
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/bootstrap.min.css') }}">
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
-    <!-- Font-Awesome CSS -->
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/font-awesome.min.css') }}">
+    <!-- CSS - Personal -->
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/styles.css') }}">
+    <!-- CSS - Bootstrap -->
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/bootstrap.min.css') }}">
+    <!-- CSS - Font-Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 
     <title>UI</title>
     <link rel='shortcut icon' sizes="16x16" href="{{ url_for('static', filename='images/favicon.ico' )}}">
   </head>
   <body>
-    <!-- Navigation -->
-    {% include "nav.html" %}
-    <!-- Navigation end -->
+        <div class="custom-wrapper">
+            <!-- Header -->
+            {% include "default/header.html" %}
+            <!-- Header end -->
 
-    <!-- Content -->
-    <div class="container-fluid">
-        {% block content %}{% endblock %}
-    </div>
-    <!-- Content end -->
+            <!-- Content -->
+           <div class="container-fluid">
+                {% block content %}{% endblock %}
+            </div>
+            <!-- Content end -->
 
-    <!-- Javascript - Personal -->
-    <script type="text/javascript" src="/static/js/global.js"></script>
-    <!-- JavaScript - Bootstrap -->
-    <script type="text/javascript" src="/static/js/jquery-3.3.1.slim.min.js"></script>
-    <script type="text/javascript" src="/static/js/popper.min.js"></script>
-    <script type="text/javascript" src="/static/js/bootstrap.min.js"></script>
-  </body>
+          <div class="custom-push"></div>
+        </div>
+
+        <!-- Footer -->
+        {% include "default/footer.html" %}
+        <!-- Footer end -->
+
+        <!-- Javascript - Personal -->
+        <script type="text/javascript" src="/static/js/global.js"></script>
+        <!-- JavaScript - Bootstrap -->
+        <script type="text/javascript" src="/static/js/jquery-3.3.1.slim.min.js"></script>
+        <script type="text/javascript" src="/static/js/popper.min.js"></script>
+        <script type="text/javascript" src="/static/js/bootstrap.min.js"></script>
+    </body>
 </html>
