@@ -1,12 +1,11 @@
 import click
-import logging
 
 import flask
 
-LOG = logging.getLogger(__name__)
-
 # Flask Docs - http://flask.palletsprojects.com/en/1.1.x/
 app = flask.Flask(__name__)
+
+LOG = app.logger
 
 # Import views after app definition to avoid circular import errors
 import code.ui.modules.portfolio.views

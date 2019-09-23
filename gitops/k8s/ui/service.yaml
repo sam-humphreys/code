@@ -1,0 +1,15 @@
+kind: Service
+apiVersion: v1
+metadata:
+  name: ui-service
+  annotations:
+    service.alpha.kubernetes.io/app-protocols: '{"web":"HTTPS"}'
+spec:
+  type: NodePort
+  selector:
+    app: ui-deployment
+  ports:
+  - name: ui-service
+    protocol: TCP
+    port: 80
+    targetPort: 5000

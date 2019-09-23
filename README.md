@@ -2,9 +2,9 @@
 
 ## About
 
-This repository serves as an example of my personal coding skills, just for fun. The codebase is wrote Python (3.6), however also hosts a touch of other technologies such as Docker, Kubernetes and Terraform.
+This repository serves as an example of my personal coding skills, just for fun. The codebase is written Python (3.6), however also hosts a touch of other technologies such as Docker, Kubernetes and Terraform.
 
-**Feel free to browse or clone this repo!**
+**Feel free to browse and clone this repo or view the simple web application (UI) [here](http://34.102.195.133)!**
 
 *Please note that some code may not work due to need for other resources. For example code which utilises Kubernetes will at minimum require a Kubernetes cluster and local authentication when using command line tools.*
 

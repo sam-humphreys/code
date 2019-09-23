@@ -1,0 +1,27 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: &Name ui-deployment
+spec:
+  selector:
+    matchLabels:
+      app: *Name
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: *Name
+    spec:
+      containers:
+        - name: ui-deployment-container
+          image: samhumphreys/code:30c5e395d8f9db190b33fd4c8151540ad60e373a
+          # Deploy with gunicorn due to Flask server intended only for development
+          command: ["gunicorn"]
+          args: ["-b", "0.0.0.0:5000", "code.ui:app"]
+          resources:
+            limits:
+              cpu: 100m
+              memory: 500Mi
+          ports:
+            - name: http
+              containerPort: 5000
