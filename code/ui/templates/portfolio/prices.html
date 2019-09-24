@@ -17,7 +17,7 @@
 
 <h2>Data</h2>
 <a class="btn btn-primary btn-dark" style="margin-bottom: 20px;" href="{{ url_for('download_price_csv', ticker=selected_ticker) }}" role="button">Download CSV</a>
-<div class="table-wrapper-scroll-y my-custom-scrollbar">
+<div class="table-wrapper-scroll-y my-custom-scrollbar" style="height: 1000px;">
     {{ table_data|safe }}
 </div>
 

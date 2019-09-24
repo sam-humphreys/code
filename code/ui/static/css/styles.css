@@ -33,8 +33,11 @@ html, body {
     color: #343a40 !important;
 }
 
-.navbar-toggler {
+.navbar-toggler, .dropdown-toggle {
     cursor: pointer;
+}
+
+.navbar-toggler {
     margin-bottom: 5px;
 }
 
@@ -42,7 +45,7 @@ html, body {
     border-color: #aacaea !important;
 }
 
-.navbar>button:focus {
+.navbar>button:focus, .modal-header>button {
     outline: none !important;
 }
 
@@ -54,7 +57,6 @@ html, body {
 
 .my-custom-scrollbar {
     position: relative;
-    height: 1000px;
     overflow: auto;
 }
 
@@ -63,6 +65,9 @@ html, body {
 }
 
 .custom-jumbotron {
-    border-radius: 0px 0px 10px 10px !important;
     background-color: #aacaea !important;
+}
+
+.header-rounded-bottom {
+    border-radius: 0px 0px 10px 10px !important;
 }
