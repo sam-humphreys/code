@@ -6,7 +6,7 @@ This repository serves as an example of my personal coding skills, just for fun.
 
 **Feel free to browse and clone this repo or view the simple web application (UI) [here](http://34.102.195.133)!**
 
-*Please note that some code may not work due to need for other resources. For example code which utilises Kubernetes will at minimum require a Kubernetes cluster and local authentication when using command line tools.*
+*Please note that some code may not work due to need for other resources. There are Terraform modules [here](./gitops/gcp/main.tf) for Google Cloud Platform, which could be applied and is what this project utilises.*
 
 ---
 

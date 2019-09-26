@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
         - name: ui-deployment-container
-          image: samhumphreys/code:f57b6367a100b5f1ed73c0d6a3455ffadb2e9dcf
+          image: samhumphreys/code:4809e4376005003f9044882a147ce9da9dd0998a
           env:
             - name: USERNAME
               valueFrom:
@@ -36,8 +36,8 @@ spec:
           args: ["-b", "0.0.0.0:5000", "code.ui:app"]
           resources:
             limits:
-              cpu: 100m
-              memory: 500Mi
+              cpu: 1
+              memory: 1Gi
           ports:
             - name: http
               containerPort: 5000
