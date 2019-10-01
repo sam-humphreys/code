@@ -8,6 +8,9 @@ import flask
 # Flask Docs - http://flask.palletsprojects.com/en/1.1.x/
 app = flask.Flask(__name__)
 
+# Set in deployment YAML
+app.secret_key = os.environ.get('SECRET_KEY', 'dev')
+
 LOG = app.logger
 
 # Import views
