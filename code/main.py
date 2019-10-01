@@ -12,11 +12,12 @@ import code.ui
 @click.group()
 def main():
     logging.config.dictConfig(code.logging.CONFIG)
+    IPython.InteractiveShell.colors = 'Linux'
 
 
 # Register subcommands
 main.add_command(code.k8s.k8s)
-main.add_command(code.ui.flask_app)
+main.add_command(code.ui.ui)
 
 
 @main.command()
@@ -27,7 +28,7 @@ def ipython():
 
 @main.command()
 def test_cli():
-    """Test whether of not the CLI is working"""
+    """Test whether or not the CLI is working"""
     LOG = logging.getLogger(__name__)
     LOG.info('CLI Working')
 

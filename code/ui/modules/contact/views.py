@@ -15,6 +15,7 @@ def contact():
     """Contact page - handles form submission for emailing"""
     if flask.request.method == 'POST':
         send_mail(form=flask.request.form.to_dict())
+        flask.flash('Sent. Thank you for your message!')
 
     return flask.render_template('contact/contact.html')
 

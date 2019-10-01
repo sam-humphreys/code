@@ -6,6 +6,8 @@ metadata:
   annotations:
     kubernetes.io/ingress.global-static-ip-name: "ui-static-ip"
 spec:
+  tls:
+  - secretName: ui-tls
   backend:
     serviceName: ui-service
     servicePort: 80

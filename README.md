@@ -4,7 +4,7 @@
 
 This repository serves as an example of my personal coding skills, just for fun. The codebase is written Python (3.6), however also hosts a touch of other technologies such as Docker, Kubernetes and Terraform.
 
-**Feel free to browse and clone this repo or view the simple web application (UI) [here](http://34.102.195.133)!**
+**Feel free to browse and clone this repo or view the simple web application (UI) [here](http://sam-humphreys.co.uk)!**
 
 *Please note that some code may not work due to need for other resources. There are Terraform modules [here](./gitops/gcp/main.tf) for Google Cloud Platform, which could be applied and is what this project utilises.*
 
@@ -16,16 +16,12 @@ This repository serves as an example of my personal coding skills, just for fun.
 - Clone this repository (HTTPS) - `git clone https://github.com/sam-humphreys/code.git`
 - Downloaded and installed Python (3.6 distribution) from [here](https://www.python.org/downloads/)
 
-### Virtual Environment
+### Installation
 Please ensure you completed all the prerequisites before continuing
 
-1. Navigate into the cloned repository - `cd ~/code`
-2. Install the Python library virtualenv - `pip3 install virtualenv`
-3. Create a virtual environment - `virtualenv venv`
-4. Activate the virtual environment: `source venv/bin/activate`
-5. Install code as a Python library - `python setup.py install`
-6. Install all other Python libraries - `pip install -r requirements.txt`
-7. Update your Python path - `export PYTHONPATH=':/code'`
+1. Navigate to the root directory - `cd ~/code`
+2. Make the [shell script](./setup.sh) executable - `chmod u+x setup.sh`
+3. Run the shell script - `source setup.sh`
 
 **SUCCESS!**
 
@@ -52,7 +48,7 @@ To register a new command:
 
 ## Continuous Integration (CI)
 
-This repository uses [Docker Hub](https://hub.docker.com/) to handle CI. This works fine due to the low volume of code being pushed and it is also open-source (perfect for this purpose). Docker Hub has a Slack integration, so alerts on build/test status' can be tracked fairly easily. These alerts have direct links to the UI where full logs can be found for debugging or other requirements. The other pro of using Docker Hub, is that having configured automated tests, build status' are posted automatically to each open Github pull request upon completion as can be seen in the image below.
+This repository uses [Docker Hub](https://hub.docker.com/) to handle CI. This works well due to the low volume of code being pushed and it's also open-source (perfect for this purpose). The main pro of using Docker Hub, is that having configured automated tests, build status' are posted automatically to each open Github pull request upon completion as can be seen in the image below. Docker Hub has also has a Slack integration, so alerts on build/test status' can be tracked easily.
 
 ![PR Example](./images/pr_example.png "Example Gtihub pull request CI")
 
@@ -61,7 +57,7 @@ The way Docker Hub is configured, it will:
 - Each time a pull request is merged into master branch:
     - Automatically build the image
     - Due to the [Docker compose test file](./docker-compose.test.yml), it will execute an intensive pytest run at the end of the build
-    - Due to the Docker post push [file](./hooks/post_push), create a tag within the Docker Hub repository using the merged Git hash. This enables exact commit referencing, which can be seen in the image in this deployment [here](./gitops/k8s/deployments/watch-pods.yaml).
+    - Due to the [Docker post push file](./hooks/post_push), create a tag within the Docker Hub repository using the merged Git hash. This enables exact commit referencing, which can be seen in the image in this deployment [here](./gitops/k8s/deployments/watch-pods.yaml).
 
 If the tests fail, the build will too fail, thus enabling smooth CI. This repository uses [Pytest](https://docs.pytest.org/en/latest/) and [Hypothesis](https://hypothesis.readthedocs.io/en/latest/) to run a series of informed and property based tests.
 
@@ -70,4 +66,5 @@ To execute tests from the command line:
 - Change different hypothesis profiles:
     - Fast (less examples, shorter time limits): `pytest --hypothesis-profile=fast`
     - Intensive (more examples, longer time limits): `pytest --hypothesis-profile=intensive`
+
 ---

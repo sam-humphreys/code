@@ -10,7 +10,12 @@ Click==7.0
 code==1.0
 decorator==4.4.0
 Flask==1.1.1
+google-api-core==1.14.2
 google-auth==1.6.3
+google-cloud-core==1.0.3
+google-cloud-logging==1.12.1
+googleapis-common-protos==1.6.0
+grpcio==1.24.0
 gunicorn==19.9.0
 hypothesis==4.36.0
 idna==2.8
@@ -37,6 +42,7 @@ pexpect==4.7.0
 pickleshare==0.7.5
 pluggy==0.13.0
 prompt-toolkit==2.0.9
+protobuf==3.9.2
 ptyprocess==0.6.0
 py==1.8.0
 pyasn1==0.4.7

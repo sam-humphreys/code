@@ -26,6 +26,19 @@
             {% include "default/header.html" %}
             <!-- Header end -->
 
+            {% with messages = get_flashed_messages() %}
+                {% if messages %}
+                    {% for message in messages %}
+                        <div class="alert neutral-alert alert-dismissible fade show" role="alert">
+                            {{ message }}
+                            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                    {% endfor %}
+                {% endif %}
+            {% endwith %}
+
             <!-- Content -->
            <div class="container-fluid">
                 {% block content %}{% endblock %}
