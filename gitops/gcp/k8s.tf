@@ -6,6 +6,9 @@ resource "google_container_cluster" "cluster" {
     remove_default_node_pool    = true
     initial_node_count          = 1
 
+    network     = "${google_compute_network.vpc-network.name}"
+    subnetwork  = "${google_compute_subnetwork.vpc-subnetwork.name}"
+
     maintenance_policy {
         daily_maintenance_window {
             start_time = "03:00"

@@ -2,7 +2,9 @@ apiVersion: extensions/v1beta1
 kind: Ingress
 metadata:
   name: ui-ingress
-  # Static IP created with - gcloud compute addresses create ui-static-ip --global
+  # Static IP created with either:
+  #   - Terraform (see gitops/gcp/network.tf)
+  #   - gcloud compute addresses create ui-static-ip --global
   annotations:
     kubernetes.io/ingress.global-static-ip-name: "ui-static-ip"
 spec:
