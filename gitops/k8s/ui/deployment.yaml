@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
         - name: ui-deployment-container
-          image: samhumphreys/code:d271ca8841d3c0c3e71c379b55dcd5fe0c1cc13e
+          image: samhumphreys/code:eb2b024c595f811321221582d6c832be5b38acd7
           volumeMounts:
           - name: tls
             mountPath: /gitops/k8s/secrets/ui-tls
