@@ -6,7 +6,7 @@ This repository serves as an example of my personal coding skills, just for fun.
 
 **Feel free to browse and clone this repo or view the simple web application (UI) [here](http://sam-humphreys.co.uk)!**
 
-*Please note that some code may not work due to need for other resources. There are Terraform modules [here](./gitops/gcp/main.tf) for Google Cloud Platform, which could be applied and is what this project utilises.*
+*Please note that some code may not work due to need for resources other than Python. There are Terraform modules [here](./gitops/gcp/main.tf) for Google Cloud Platform, which could be applied and is what this project utilises.*
 
 ---
 
@@ -68,3 +68,9 @@ To execute tests from the command line:
     - Intensive (more examples, longer time limits): `pytest --hypothesis-profile=intensive`
 
 ---
+
+## Infrastructure as Code (IaC)
+
+This repository utilises [Terraform](https://www.terraform.io) to manage Google Cloud Platform (GCP) resources and act as the primary IaC source. These modules can be found in the Gitops GCP folder [here](./gitops/gcp/main.tf). This repository has been written to work primarily with Kubernetes on GCP, thus there are numerous YAML files acting as a secondary IaC source which can be utilised in addition to the Terraform modules. These YAMLs can be found in the Gitops K8s folder [here](./gitops/k8s/deployments/watch-pods.yaml).
+
+![DevOps Cycle](./images/devops.png "DevOps Cycle")

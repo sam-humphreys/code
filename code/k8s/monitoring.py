@@ -1,11 +1,18 @@
 import logging
 import typing
+import json
 
 import kubernetes
+import pandas
 
 import code.alerts.slack
 
 LOG = logging.getLogger(__name__)
+
+KUBE_SYSTEM_NAMESPACES = [
+    'kube-system',
+    'kube-public',
+]
 
 
 class KubernetesClient:
@@ -14,9 +21,11 @@ class KubernetesClient:
 
     param: local - Either use local or in-cluster kubernetes authentication config
     """
-    def __init__(self, local: bool):
+    def __init__(self, local: bool = None):
+        self.local = local
         kubernetes.config.load_kube_config() if local else kubernetes.config.load_incluster_config()
         self.client: kubernetes.client.CoreV1Api = kubernetes.client.CoreV1Api()
+        self.api_client: kubernetes.client.api_client.ApiClient = kubernetes.client.ApiClient()
 
     def watch_pods(self, namespace: str) -> None:
         """Watch pod events in the cluster for specified namespace. Send Slack alerts for each event"""
@@ -39,6 +48,40 @@ class KubernetesClient:
                 ))
 
                 alerted[name] = status
+
+    def get_namespaces(self, exclude_kube_system: bool = None) -> typing.List[str]:
+        """
+        Return a list of string names for each namespace in cluster. Pass
+        exclude_kube_system to remove the kubernetes system namespaces.
+        """
+        namespaces = self.client.list_namespace().items
+        names = list()
+
+        for n in namespaces:
+            is_kube_system = n.metadata.name in KUBE_SYSTEM_NAMESPACES
+            if (not exclude_kube_system) or (exclude_kube_system) and (not is_kube_system):
+                names.append(n.metadata.name)
+
+        return names
+
+    def get_cluster_pod_metrics(self) -> pandas.DataFrame:
+        """Construct a dataframe containing CPU & memory usage for all pods running on the cluster"""
+        def _process(pod_metrics):
+            for pod in pod_metrics:
+                yield _process_api_metrics_pod(pod)
+
+        request = self.api_client.call_api(
+            resource_path='/apis/metrics.k8s.io/v1beta1/pods',
+            method='GET',
+            auth_settings=['BearerToken'],
+            response_type='json',
+            _preload_content=False,
+        )
+
+        response, code, headers = request
+        pod_metrics = json.loads(response.data.decode())['items']
+
+        return pandas.concat(_process(pod_metrics)).reset_index(drop=True)
 
 
 def _process_pod_event(
@@ -72,3 +115,25 @@ def _process_pod_event(
         colour = code.alerts.slack.Colours.ERROR
 
     return (name, status, colour)
+
+
+def _process_api_metrics_pod(pod: typing.Dict[str, typing.Any]) -> pandas.DataFrame:
+    """Extract CPU & memory metrics from a pod returned by the Kubernetes API"""
+    data = {
+        'timestamp': pandas.Timestamp('now'),
+        'pod_name': pod['metadata']['name'],
+        'namespace': pod['metadata']['namespace'],
+    }
+
+    df = pandas.DataFrame(data, index=[0])
+
+    container_usage = [container['usage'] for container in pod['containers']]
+    container_df = pandas.DataFrame(container_usage)
+
+    # Sum containers usage & assign on pod level (data is formerly string type w/ unit)
+    df = df.assign(
+        cpu_n=container_df['cpu'].str.strip('n').astype(int).sum(),
+        memory_ki=container_df['memory'].str.strip('Ki').astype(int).sum(),
+    )
+
+    return df
