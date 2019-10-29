@@ -109,3 +109,6 @@ venv.bak/
 
 # Terraform
 .terraform/
+
+# Google Cloud SQL
+cloud_sql_proxy

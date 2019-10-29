@@ -45,6 +45,7 @@ class TestSmtpClient(unittest.TestCase):
         self.client = code.alerts.smtp.Client(
             username='test@client.com',
             password='password',
+            testing=True,
         )
 
     def test_is_active(self):

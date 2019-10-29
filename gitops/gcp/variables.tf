@@ -18,7 +18,7 @@ variable "zone" {
     description   = "Project zone"
 }
 
-variable "kubernetes-developer-group-email" {
+variable "kubernetes-developer-user-email" {
     type          = "string"
-    description   = "Email address for a Google group, to grant a Kubernetes developer role"
+    description   = "Email address for a Google user, to grant a Kubernetes developer role"
 }

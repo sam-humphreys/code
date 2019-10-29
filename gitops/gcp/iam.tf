@@ -3,6 +3,20 @@ resource "google_project_iam_binding" "kubernetes-developer" {
     role    = "roles/container.developer"
 
     members = [
-        "group:${var.kubernetes-developer-group-email}",
+        "user:${var.kubernetes-developer-user-email}",
+    ]
+}
+
+resource "google_service_account" "cloud-sql-user" {
+  account_id   = "cloud-sql-user"
+  display_name = "cloud-sql-user"
+}
+
+resource "google_project_iam_binding" "cloud-sql-client" {
+    project = "${var.project_id}"
+    role    = "roles/cloudsql.client"
+
+    members = [
+        "serviceAccount:${google_service_account.cloud-sql-user.email}"
     ]
 }
