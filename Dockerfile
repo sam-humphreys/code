@@ -12,6 +12,9 @@ RUN apt-get update && apt-get install -y \
     python3.7 \
     python3-pip
 
+# Enables native CLI
+ENV PYTHONPATH=":/code"
+
 # Install 'code' as a package
 RUN python3.7 setup.py install
 
