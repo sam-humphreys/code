@@ -31,7 +31,7 @@ resource "google_container_node_pool" "preemptible-pool" {
 
     node_config {
         preemptible     = true
-        disk_size_gb    = 60
+        disk_size_gb    = 80
         machine_type    = "n1-standard-2"
 
         metadata = {
