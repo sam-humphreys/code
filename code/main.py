@@ -7,6 +7,7 @@ import IPython
 import code.k8s
 import code.logging
 import code.ui
+import code.db
 
 
 @click.group()
@@ -18,6 +19,7 @@ def main():
 # Register subcommands
 main.add_command(code.k8s.k8s)
 main.add_command(code.ui.ui)
+main.add_command(code.db.db)
 
 
 @main.command()

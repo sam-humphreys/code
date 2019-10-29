@@ -40,14 +40,16 @@ class Email(typing.NamedTuple):
 
 class Client:
     """Generic Gmail SMTP client for sending emails"""
-    def __init__(self, username: str, password: str):
+    def __init__(self, username: str, password: str, testing: bool = None):
         self.username = username
         self.password = password
+
+        context = None if testing else ssl.create_default_context()
 
         self.server: smtplib.SMTP_SSL = smtplib.SMTP_SSL(
             host=SMTP_HOST,
             port=SSL_PORT,
-            context=ssl.create_default_context(),
+            context=context,
         )
 
         self.server.login(user=self.username, password=self.password)  # Authenticate

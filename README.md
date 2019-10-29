@@ -8,8 +8,6 @@ This repository serves as an example of my personal coding skills, just for fun.
 
 *Please note that some code may not work due to need for resources other than Python. There are Terraform modules [here](./gitops/gcp/main.tf) for Google Cloud Platform, which could be applied and is what this project utilises.*
 
----
-
 ## Setup
 
 ### Prerequisites
@@ -25,7 +23,6 @@ Please ensure you completed all the prerequisites before continuing
 
 **SUCCESS!**
 
----
 
 ## Running Commands (CLI)
 
@@ -44,7 +41,27 @@ To register a new command:
 
     b) Register it using the `main.add_command(code.folder.group)` syntax
 
----
+## Database
+
+This repository uses Google Cloud PostgreSQL databases. In order to connect locally, the Cloud SQL Proxy is therefore required - read about the proxy [here](https://cloud.google.com/sql/docs/postgres/sql-proxy). For a quick setup you can run the following commands:
+
+1. Download the proxy
+```
+# MAC
+curl -o cloud_sql_proxy https://dl.google.com/cloudsql/cloud_sql_proxy.darwin.amd64
+
+# Linux
+wget https://dl.google.com/cloudsql/cloud_sql_proxy.linux.amd64 -O cloud_sql_proxy
+```
+2. Make the proxy executable
+```
+# MAC & Linux
+chmod +x cloud_sql_proxy
+```
+3. Connect locally to a DB instance - for example:
+```
+./cloud_sql_proxy -instances someGCPproject:someGCPregion:someGCPinstance=tcp:9999
+```
 
 ## Continuous Integration (CI)
 
@@ -66,8 +83,6 @@ To execute tests from the command line:
 - Change different hypothesis profiles:
     - Fast (less examples, shorter time limits): `pytest --hypothesis-profile=fast`
     - Intensive (more examples, longer time limits): `pytest --hypothesis-profile=intensive`
-
----
 
 ## Infrastructure as Code (IaC)
 
