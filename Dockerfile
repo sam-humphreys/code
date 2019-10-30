@@ -15,11 +15,5 @@ RUN apt-get update && apt-get install -y \
 # Enables native CLI
 ENV PYTHONPATH=":/code"
 
-# Install 'code' as a package
-RUN python3.7 setup.py install
-
-# Install remaining packages
-RUN pip3 install --trusted-host pypi.python.org -r requirements.txt
-
-# Enables native CLI
-RUN export PYTHONPATH=":/code"
+RUN python3 setup.py install && \
+    pip3 install -r requirements.txt
