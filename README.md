@@ -2,7 +2,7 @@
 
 ## About
 
-This repository serves as an example of my personal coding skills, just for fun. The codebase is written Python (3.6), however also hosts a touch of other technologies such as Docker, Kubernetes and Terraform.
+This repository serves as an example of my personal coding skills, just for fun. The codebase is written Python (3.7), however also hosts a touch of other technologies such as Docker, Kubernetes and Terraform.
 
 **Feel free to browse and clone this repo or view the simple web application (UI) [here](http://sam-humphreys.co.uk)!**
 
@@ -12,7 +12,7 @@ This repository serves as an example of my personal coding skills, just for fun.
 
 ### Prerequisites
 - Clone this repository (HTTPS) - `git clone https://github.com/sam-humphreys/code.git`
-- Downloaded and installed Python (3.6 distribution) from [here](https://www.python.org/downloads/)
+- Downloaded and installed Python (3.7 distribution) from [here](https://www.python.org/downloads/)
 
 ### Installation
 Please ensure you completed all the prerequisites before continuing

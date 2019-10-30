@@ -1,0 +1,45 @@
+# WARNING - Running this YAML will result in a successful DB migration,
+# however the cloudsql proxy sidecar will keep the pod running post
+# completion of the db-create-monitoring-tables-container container.
+# This seems to be a common issue for Kubernetes on Jobs/Pods, see:
+# https://stackoverflow.com/questions/41679364/kubernetes-stop-cloudsql-proxy-sidecar-container-in-multi-container-pod-job
+# Simple fix for one-off's given the nature of this pods task, is to
+# delete the pod after the migration has completed.
+apiVersion: v1
+kind: Pod
+metadata:
+  name: db-create-monitoring-tables
+spec:
+  restartPolicy: Never
+  containers:
+  - name: db-create-monitoring-tables-container
+    image: samhumphreys/code:efdb658afcb4c506398b53b511214d4fc76e296d
+    command: ["coderun"]
+    args: ["db", "create-monitoring-tables"]
+    resources:
+      limits:
+        cpu: "100m"
+        memory: "500Mi"
+  # https://cloud.google.com/sql/docs/postgres/connect-kubernetes-engine
+  - name: cloudsql-proxy
+    image: gcr.io/cloudsql-docker/gce-proxy:1.11
+    volumeMounts:
+      - name: cloudsql-instance-credentials
+        mountPath: /secrets/cloudsql
+        readOnly: true
+    command: [
+      "/cloud_sql_proxy",
+      "-instances=someGCPproject:someGCPregion:someGCPinstance=tcp:9999",
+      "-credential_file=/secrets/cloudsql/credentials.json"
+    ]
+    securityContext:
+      runAsUser: 2  # non-root user
+      allowPrivilegeEscalation: false
+    resources:
+      limits:
+        cpu: "100m"
+        memory: "500Mi"
+  volumes:
+    - name: cloudsql-instance-credentials
+      secret:
+        secretName: cloudsql-instance-credentials
