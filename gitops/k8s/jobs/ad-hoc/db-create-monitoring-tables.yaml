@@ -3,6 +3,7 @@
 # completion of the db-create-monitoring-tables-container container.
 # This seems to be a common issue for Kubernetes on Jobs/Pods, see:
 # https://stackoverflow.com/questions/41679364/kubernetes-stop-cloudsql-proxy-sidecar-container-in-multi-container-pod-job
+# https://stackoverflow.com/questions/36208211/sidecar-containers-in-kubernetes-jobs
 # Simple fix for one-off's given the nature of this pods task, is to
 # delete the pod after the migration has completed.
 apiVersion: v1
