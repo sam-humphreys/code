@@ -4,9 +4,6 @@ WORKDIR /code
 
 COPY . /code
 
-# Enables native CLI
-ENV PYTHONPATH :/code
-
 # Download ubuntu packages
 RUN apt-get update && apt-get install -y \
     git \
@@ -15,8 +12,8 @@ RUN apt-get update && apt-get install -y \
     python3.7 \
     python3-pip
 
-# Install 'code' as a package
-RUN python3.7 setup.py install
+# Enables native CLI
+ENV PYTHONPATH=":/code"
 
-# Install remaining packages
-RUN pip3 install --trusted-host pypi.python.org -r requirements.txt
+RUN python3 setup.py install && \
+    pip3 install -r requirements.txt

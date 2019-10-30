@@ -1,5 +1,6 @@
 import logging
 import logging.config
+import typing
 
 import click
 import IPython
@@ -8,6 +9,12 @@ import code.k8s
 import code.logging
 import code.ui
 import code.db
+
+# Resolves issue with Docker container:
+#   RuntimeError: Click will abort further execution because Python 3 was
+#   configured to use ASCII as encoding for the environment. Consult
+#   https://click.palletsprojects.com/en/7.x/python3/ for mitigation steps.
+click.core._verify_python3_env: typing.Callable = lambda: None
 
 
 @click.group()
