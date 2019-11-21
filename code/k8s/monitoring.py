@@ -120,7 +120,7 @@ def _process_pod_event(
 def _process_api_metrics_pod(pod: typing.Dict[str, typing.Any]) -> pandas.DataFrame:
     """Extract CPU & memory metrics from a pod returned by the Kubernetes API"""
     data = {
-        'timestamp': pandas.Timestamp('now'),
+        'ts': pandas.Timestamp('now'),
         'pod_name': pod['metadata']['name'],
         'namespace': pod['metadata']['namespace'],
     }
@@ -132,8 +132,27 @@ def _process_api_metrics_pod(pod: typing.Dict[str, typing.Any]) -> pandas.DataFr
 
     # Sum containers usage & assign on pod level (data is formerly string type w/ unit)
     df = df.assign(
-        cpu_n=container_df['cpu'].str.strip('n').astype(int).sum(),
-        memory_ki=container_df['memory'].str.strip('Ki').astype(int).sum(),
+        # cpu_n=container_df['cpu'].str.strip('n').astype(int).sum(),
+        # memory_ki=container_df['memory'].str.strip('Ki').astype(int).sum(),
+        cpu=container_df['cpu'],
+        memory=container_df['memory'],
     )
 
     return df
+
+import time
+
+import code.db.utils
+
+table_name = code.db.monitoring.NAMESPACE_USAGE_TABLE_NAME
+
+while True:
+    with code.db.utils.create_engine('monitoring-rw', 'monitoringrules', 'localhost:9999', 'monitoring') as engine:
+        client = KubernetesClient(True)
+        df = client.get_cluster_pod_metrics()
+
+        # Insert df into db table
+        df.to_sql(name=table_name, con=engine, if_exists='append', index=False)
+        LOG.info(f'Inserted {len(df)} records into {table_name} DB table')
+
+    time.sleep(60)

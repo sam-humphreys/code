@@ -13,12 +13,12 @@ def _create_namespace_usage_table(engine: sqlalchemy.engine.Engine) -> None:
     sql = f"""
         CREATE TABLE IF NOT EXISTS
         {NAMESPACE_USAGE_TABLE_NAME} (
-            pk BIGINT NOT NULL PRIMARY KEY,
+            pk SERIAL PRIMARY KEY,
             ts timestamp NOT NULL,
             pod_name text NOT NULL,
             namespace text NOT NULL,
-            cpu_n BIGINT NOT NULL,
-            memory_ki BIGINT NOT NULL
+            cpu text NOT NULL,
+            memory text NOT NULL
         );
     """
 
